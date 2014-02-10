@@ -21,7 +21,7 @@ alias ema='emacs23 -nw'
 alias hunter='ssh -X ec93@eniac.cs.hunter.cuny.edu'
 alias nickcri1='ssh nickcri1@nickcritser.com' 
 # added by Anaconda 1.8.0 installer
-export PATH="/home/chaos/anaconda/bin:$PATH"
+#export PATH="/home/chaos/anaconda/bin:$PATH"
 
 #added path to mongodb binaries
 export PATH="/home/chaos/mongoDB/mongodb-linux-x86_64-2.4.8/bin:$PATH"

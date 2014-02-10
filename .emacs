@@ -18,10 +18,17 @@
 ;;http://davidmedinawiki.wordpress.com/2012/06/02/my-emacs-file/
 (global-font-lock-mode t)
 
-(setq make-backup-files nil)
+
+;;ORG.MODE GLOBAL KEYS
+(global-set-key "\C-cl" 'org-store-link)
+(global-set-key "\C-cc" 'org-capture)
+(global-set-key "\C-ca" 'org-agenda)
+(global-set-key "\C-cb" 'org-iswitchb)
+
 
 ;;Forgot what this does !
 (iswitchb-mode 1)
+
 
 ;;Set Line numbers mode to on
 (global-linum-mode t)
@@ -73,7 +80,7 @@
 
 ;; org mode TODO FUNCTIONALITY
 (setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s)" "|" "DONE(d)")
+      '((sequence "TODO(t)" "STARTED(s)" "|" "ABORT(a)" "DONE(d)")
 	(sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
 	(sequence "|" "CHECK_OUT(c)")))
 
@@ -89,8 +96,10 @@
 
 ;;;;;;;;;;;;;;;;;;Org mode Latex Related
 (require 'org-latex)
-(unless (boundp 'org-export-latex-classes)
-  (setq org-export-latex-classes nil))
+(setq org-export-latex-listings t)
+
+;(unless (boundp 'org-export-latex-classes)
+;  (setq org-export-latex-classes nil))
 (add-to-list 'org-export-latex-classes
 	     '("article"
 	       "\\documentclass{article}"
@@ -98,7 +107,7 @@
 
 ;;(add-to-list 'org-export-latex-packages-alist
 ;;	     '(("AUTO" "inputenc" t)))
-
+(require 'org-latex)
 (add-to-list 'org-export-latex-classes
 	     '("org-article"
 	       "\\documentclass{org-article}
@@ -110,6 +119,29 @@
 	       ("\\paragraph{%s}" . "\\paragraph*{%s}")
 	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
+;; http://tex.stackexchange.com/questions/54205/org-mode-export-to-latex-temptation-or-nuisance
+(require 'org-latex)
+(add-to-list 'org-export-latex-classes
+             '("myarticle"
+"\\documentclass[a4paper,12pt]{article}
+
+\\usepackage[utf8]{inputenc}
+\\usepackage{lmodern}
+\\usepackage[T1]{fontenc}
+
+\\usepackage{fixltx2e}
+
+\\newcommand\\foo{bar}
+               [NO-DEFAULT-PACKAGES]
+               [NO-PACKAGES]
+               [EXTRA]"
+               ("\\section{%s}" . "\\section*{%s}")
+           ("\\subsection{%s}" . "\\subsection*{%s}")
+           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
+           ("\\paragraph{%s}" . "\\paragraph*{%s}")
+           ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
+
+(require 'org-latex)
 (add-to-list 'org-export-latex-classes
 	     '("koma-article"
 	       "\\documentclass{scrartcl}"
@@ -195,7 +227,7 @@
 ;;taken from http://www.cs.cmu.edu/~keng/emacs.config
 ;;========font lock==================
 (require 'font-lock)
-(setq nick-foreground "light  green")
+(setq nick-foreground "light green")
 (setq nick-background "dark cyan")
 
 
