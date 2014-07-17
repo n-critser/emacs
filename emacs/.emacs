@@ -19,6 +19,18 @@
 (global-font-lock-mode t)
 
 
+;; startup stuff
+
+;;(shell)                       ;; start a shell
+;;(rename-buffer "shell-first") ;; rename it
+(split-window-horizontally)   ;; want two windows at startup 
+(other-window 1)              ;; move to other window
+
+
+
+
+
+
 ;;ORG.MODE GLOBAL KEYS
 (global-set-key "\C-cl" 'org-store-link)
 (global-set-key "\C-cc" 'org-capture)
@@ -48,10 +60,12 @@
 (org-clock-persistence-insinuate)
 
 ;; Org mode capture Templates !!
+;; All these need to be reworked to point to the GTD.org file in
+;; the correct category 
 (define-key global-map "\C-cc" 'org-capture)
 (setq org-capture-templates
-      '(("t" "Todo" entry (file  "~/dayIsDone/tasks.org" "Tasks")
-	 "* TODO %? %t\n %i\n %a")
+      '(("t" "Todo" entry (file+headline  "~/dayIsDone/GTD.org" "Tasks")
+	 "* TODO %? Added: %U \n %i\n %a \n")
 	("p" "Project" entry (file "~/dayIsDone/projects.org" )
 	 "* %^{prompt}\n** TODO %? %t\n %i\n %a")
 	("w" "Work" entry (file "~/dayIsDone/work.org" )
@@ -71,6 +85,7 @@
 ;; org mode agenda files
 (define-key global-map "\C-ca" 'org-agenda)
 (setq org-agenda-files (list "~/dayIsDone/tasks.org"
+			     "~/dayIsDone/GTD.org"
 			     "~/dayIsDone/work.org"
 			     "~/dayIsDone/school.org"
 			     "~/dayIsDone/projects.org"
@@ -105,9 +120,9 @@
 	       "\\documentclass{article}"
 	       ("\\section{%s}" . "\\section*{%s}")))
 
-;;(add-to-list 'org-export-latex-packages-alist
-;;	     '(("AUTO" "inputenc" t)))
-(require 'org-latex)
+;(add-to-list 'org-export-latex-packages-alist
+;	     '(("AUTO" "inputenc" t)))
+;(require 'org-latex)
 (add-to-list 'org-export-latex-classes
 	     '("org-article"
 	       "\\documentclass{org-article}
@@ -120,7 +135,7 @@
 	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
 ;; http://tex.stackexchange.com/questions/54205/org-mode-export-to-latex-temptation-or-nuisance
-(require 'org-latex)
+;(require 'org-latex)
 (add-to-list 'org-export-latex-classes
              '("myarticle"
 "\\documentclass[a4paper,12pt]{article}
@@ -141,7 +156,7 @@
            ("\\paragraph{%s}" . "\\paragraph*{%s}")
            ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 
-(require 'org-latex)
+;(require 'org-latex)
 (add-to-list 'org-export-latex-classes
 	     '("koma-article"
 	       "\\documentclass{scrartcl}"
@@ -151,6 +166,39 @@
 	       ("\\paragraph{%s}" . "\\paragraph*{%s}")
 	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 ;;;;;;;;;;;;;;;;;;;;;;;;
+
+;;;;ORG PUBLISH SECTION MOST CODE FROM BELOW TUTORIAL
+;;;; http://www.personal.psu.edu/nus173/sitecreation.html
+(require 'org-publish)
+
+(defun my-org-html-publish-to-html (plist filename pub-dir)
+  (org-publish-org-to 'html filename ".org" plist pub-dir))
+
+(setq org-publish-project-alist
+      '(
+	(setq debug-on-error t)
+	("org-notes"
+	 :base-directory "~/Dev/n-critser.github.io/www-org/"
+	 :base-extension "org"
+	 :publishing-directory "~/Dev/n-critser.github.io/"
+	 :recursive t
+	 :publishing-function org-publish-org-to-html
+	 :headline-levels 4  ;;change to a new default
+	 :auto-preamble t
+	 )
+	))
+
+
+;;;;  SLIME MODE INFO GOES HERE
+
+(setq inferior-lisp-program "~/scripts/ccl64")
+(require 'slime-autoloads)
+(setq slime-net-coding-system 'utf-8-unix)
+(slime-setup '(slime-fancy))
+
+(setq slime-lisp-implementations
+      '((ccl64 ( "~/scripts/ccl64"))
+	(sbcl ("/opt/sbcl/bin/sbcl") :coding-system utf-8-unix)))
 
 (add-to-list 'load-path "~/.emacs.d")
 ;;auto-complete addon
@@ -226,9 +274,15 @@
 
 ;;taken from http://www.cs.cmu.edu/~keng/emacs.config
 ;;========font lock==================
+;; WHAT THE HELL IS THIS? 
 (require 'font-lock)
-(setq nick-foreground "light green")
-(setq nick-background "dark cyan")
+(setq nick-foreground "light blue")
+(setq nick-background "black")
+(setq nick-cursor "organge")
+(setq nick-comment "cyan")
+;(set-background-color "Black")
+;(set-foreground-color "light blue")
+;(set-cursor-color "dark cyan")
 
 
 ;(setq font-lock-function-name-face 'bold)
@@ -243,10 +297,13 @@
 ;;;
 
 (defun set-colors ()
+  (set-background-color nick-background)
+  (set-foreground-color nick-foreground)
+  (set-cursor-color nick-cursor)
   (copy-face 'default   'comment)
 ;  (set-face-foreground  'comment "dark cyan")
 ; (set-face-foreground  'comment "Ligh sky blue")
-  (set-face-background  'comment nick-background)
+  (set-face-background  'comment nick-comment)
   (setq font-lock-comment-face 'comment)
 
   (copy-face 'default   'string)
@@ -257,9 +314,10 @@
   (copy-face 'default   'function-name)
   (set-face-foreground  'function-name "Red")
   (setq font-lock-function-name-face 'function-name)
-  
+
+ 
   (copy-face 'default   'type)
-  (set-face-foreground  'type "MediumSpringGreen")
+  (set-face-foreground  'type "light sky  blue")
   (setq font-lock-type-face 'type)
   
   (copy-face 'default   'keyword)
@@ -308,9 +366,6 @@
 ;                         "-adobe-courier-bold-o-normal--*-*-75-75-m-*-*-1"))
 ;      (error nil)))
 
-(set-background-color "Black")
-(set-foreground-color "light green")
-(set-cursor-color "dark cyan")
 
 
 ;;=========Set Colors ========================
@@ -325,11 +380,6 @@
 ;; set emacs background color
 ;;(set-background-color "dark cyan");;008b8b
 
-;; startup stuff 
-;;(split-window-horizontally)   ;; want two windows at startup 
-;;(other-window 1)              ;; move to other window
-;;(shell)                       ;; start a shell
-;;(rename-buffer "shell-first") ;; rename it
 
 ;;new shit for adding a skeleton for a new file
 ;(eval-after-load 'autoinsert

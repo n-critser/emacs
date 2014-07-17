@@ -15,8 +15,6 @@
 ;;=======prevent emacs from making backup files
 (setq make-backup-files nil)
 
-
-
 ;;;; GIT RELATED PARTS 
 ;; -----------------------------------------------------------------------------
 ;; Git support
@@ -26,7 +24,6 @@
 ;;(load "/usr/share/doc/git-core/contrib/emacs/vc-git.el")
 ;;(add-to-list 'vc-handled-backends 'GIT)
 ;;(require 'git)
-
 
 ;;http://davidmedinawiki.wordpress.com/2012/06/02/my-emacs-file/
 (global-font-lock-mode t)
@@ -165,8 +162,6 @@
 	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
 ;;;;;;;;;;;;;;;;;;;;;;;;
 
-
-
 ;;;;SLIME MODE SETTING INFERIROR LISP
 (setq inferior-lisp-program "~/scripts/ccl")
 (require 'slime-autoloads)
@@ -176,7 +171,6 @@
 (setq slime-lisp-implementations
       '((ccl ( "~/scripts/ccl"))
 	(sbcl ("/opt/sbcl/bin/sbcl") :coding-system utf-8-unix)))
-
 
 
 (add-to-list 'load-path "~/.emacs.d")
@@ -218,11 +212,7 @@
 ;(add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat ncurses-base-dir))
 
 ;;magit
-
-(require 'magit)
-
 ;;(require 'magit)
-
 
 ;;=====set standard indent size to 4===
 ;;=====set style to curly under word mode===
@@ -357,14 +347,6 @@
 ;;(set-background-color "dark cyan");;008b8b
 
 
-;; startup stuff 
-;;(split-window-horizontally)   ;; want two windows at startup 
-;;(other-window 1)              ;; move to other window
-;;(shell)                       ;; start a shell
-;;(rename-buffer "shell-first") ;; rename it
-
-
-
 
 ;; startup stuff 
 (split-window-horizontally)   ;; want two windows at startup 
@@ -381,7 +363,6 @@
 ;(global-set-key (kdb "C-c h") 'doodlebug )
 ;(lookup-key (current-global-map) (kdb "C-c a"))
 (define-key global-map "\C-ch" 'sayhello)
-
 ;;new shit for adding a skeleton for a new file
 ;(eval-after-load 'autoinsert
 ;  '(define-auto-insert
@@ -406,9 +387,5 @@
 ;(require 'sws-mode)
 ;(require 'jade-mode)
 ;(add-to-list 'auto-mode-alist '("\\.styl$" . sws-mode))
-
-;(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
-=======
 ;(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
 (put 'narrow-to-page 'disabled nil)
-

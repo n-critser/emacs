@@ -25,3 +25,5 @@ alias nickcri1='ssh nickcri1@nickcritser.com'
 
 #added path to mongodb binaries
 export PATH="/home/chaos/mongoDB/mongodb-linux-x86_64-2.4.8/bin:$PATH"
+
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting

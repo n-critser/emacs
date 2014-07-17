@@ -1,0 +1,2 @@
+https://github.com/hypernumbers/learn_elisp_the_hard_way/blob/master/contents/lesson-4-2-adding-custom-functions-to-emacs.rst
+

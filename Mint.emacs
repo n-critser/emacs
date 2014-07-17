@@ -15,33 +15,13 @@
 ;;=======prevent emacs from making backup files
 (setq make-backup-files nil)
 
-
-
-;;;; GIT RELATED PARTS 
-;; -----------------------------------------------------------------------------
-;; Git support
-;; -----------------------------------------------------------------------------
-;;(load "/usr/share/doc/git-core/contrib/emacs/git.el")
-;;(load "/usr/share/doc/git-core/contrib/emacs/git-blame.el")
-;;(load "/usr/share/doc/git-core/contrib/emacs/vc-git.el")
-;;(add-to-list 'vc-handled-backends 'GIT)
-;;(require 'git)
-
-
 ;;http://davidmedinawiki.wordpress.com/2012/06/02/my-emacs-file/
 (global-font-lock-mode t)
 
-
-;;ORG.MODE GLOBAL KEYS
-(global-set-key "\C-cl" 'org-store-link)
-(global-set-key "\C-cc" 'org-capture)
-(global-set-key "\C-ca" 'org-agenda)
-(global-set-key "\C-cb" 'org-iswitchb)
-
+(setq make-backup-files nil)
 
 ;;Forgot what this does !
 (iswitchb-mode 1)
-
 
 ;;Set Line numbers mode to on
 (global-linum-mode t)
@@ -51,131 +31,6 @@
 
 ;;org mode paths ...
 ;;(add-to-list 'load-path "/home/chaos/emacs/org-8.2.4/lisp")
-
-;;;;;;;;;;;;;;;;;;;;; *****************************************
-;; org mode information and changes
-;(setq org-default-notes-file (concat "~/dayIsDone/tasks.org"))
-
-;; Clock Settings
-(setq org-clock-persist 'history)
-(org-clock-persistence-insinuate)
-
-;; Org mode capture Templates !!
-(define-key global-map "\C-cc" 'org-capture)
-(setq org-capture-templates
-      '(("t" "Todo" entry (file  "~/dayIsDone/tasks.org" "Tasks")
-	 "* TODO %? %t\n %i\n %a")
-	("p" "Project" entry (file "~/dayIsDone/projects.org" )
-	 "* %^{prompt}\n** TODO %? %t\n %i\n %a")
-	("w" "Work" entry (file "~/dayIsDone/work.org" )
-	 "* %^{prompt}\n** TODO %? %t\n %i\n %a")
-	("h" "House" entry (file+datetree "~/dayIsDone/house.org" "House Stuff")
-	 "* TODO %? %t\n %i\n %a")
-	("s" "School" entry (file+datetree "~/dayIsDone/school.org" )
-	 "* TODO %? %t\n %i\n %a")
-	("l" "Lisp" entry (file "/home/chaos/chaoskampf/hunter/spring2014/aI350/GetALisp/LISP.org" )
-	 "* CHECK_OUT %? %t\n %i\n %a")
-	("i" "Ideas" entry (file+datetree "~/dayIsDone/Ideas.org" )
-	 "* CHECK_OUT %? %t\n %i\n %a")
-	))
-;; org store link
-(define-key global-map "\C-cl" 'org-store-link)
-
-;; org mode agenda files
-(define-key global-map "\C-ca" 'org-agenda)
-(setq org-agenda-files (list "~/dayIsDone/tasks.org"
-			     "~/dayIsDone/work.org"
-			     "~/dayIsDone/school.org"
-			     "~/dayIsDone/projects.org"
-			     "~/dayIsDone/Year_Plan_2014.org"
-			     "~/dayIsDone/Winter_Plans_2013-14.org"
-			     "~/dayIsDone/house.org"))
-
-;; org mode TODO FUNCTIONALITY
-(setq org-todo-keywords
-      '((sequence "TODO(t)" "STARTED(s)" "|" "ABORT(a)" "DONE(d)")
-	(sequence "REPORT(r)" "BUG(b)" "KNOWNCAUSE(k)" "|" "FIXED(f)")
-	(sequence "|" "CHECK_OUT(c)")))
-
-
-;; org mode TAG list
-(setq org-tag-alist
-      '(("SCHOOL" . ?s)
-	("HOUSE" . ?h)
-	("PROJECT" . ?p)
-	("WORK" . ?w)
-	("@computer" . ?c)
-	("@phone" . ?p)))
-
-;;;;;;;;;;;;;;;;;;Org mode Latex Related
-(require 'org-latex)
-(setq org-export-latex-listings t)
-
-;(unless (boundp 'org-export-latex-classes)
-;  (setq org-export-latex-classes nil))
-(add-to-list 'org-export-latex-classes
-	     '("article"
-	       "\\documentclass{article}"
-	       ("\\section{%s}" . "\\section*{%s}")))
-
-;;(add-to-list 'org-export-latex-packages-alist
-;;	     '(("AUTO" "inputenc" t)))
-(require 'org-latex)
-(add-to-list 'org-export-latex-classes
-	     '("org-article"
-	       "\\documentclass{org-article}
-	       [NO-DEFAULT-PACKAGES]
-	       [PACKAGES]
-	       [EXTRA]"
-	       ("\\section{%s}"."\\section*{%s}")
-	       ("\\subsection{%s}" . "\\subsection*{%s}")
-	       ("\\paragraph{%s}" . "\\paragraph*{%s}")
-	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-;; http://tex.stackexchange.com/questions/54205/org-mode-export-to-latex-temptation-or-nuisance
-(require 'org-latex)
-(add-to-list 'org-export-latex-classes
-             '("myarticle"
-"\\documentclass[a4paper,12pt]{article}
-
-\\usepackage[utf8]{inputenc}
-\\usepackage{lmodern}
-\\usepackage[T1]{fontenc}
-
-\\usepackage{fixltx2e}
-
-\\newcommand\\foo{bar}
-               [NO-DEFAULT-PACKAGES]
-               [NO-PACKAGES]
-               [EXTRA]"
-               ("\\section{%s}" . "\\section*{%s}")
-           ("\\subsection{%s}" . "\\subsection*{%s}")
-           ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-           ("\\paragraph{%s}" . "\\paragraph*{%s}")
-           ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-
-(require 'org-latex)
-(add-to-list 'org-export-latex-classes
-	     '("koma-article"
-	       "\\documentclass{scrartcl}"
-	       ("\\section{%s}" . "\\section*{%s}")
-	       ("\\subsection{%s}" . "\\subsection*{%s}")
-	       ("\\subsubsection{%s}" . "\\subsubsection*{%s}")
-	       ("\\paragraph{%s}" . "\\paragraph*{%s}")
-	       ("\\subparagraph{%s}" . "\\subparagraph*{%s}")))
-;;;;;;;;;;;;;;;;;;;;;;;;
-
-
-
-;;;;SLIME MODE SETTING INFERIROR LISP
-(setq inferior-lisp-program "~/scripts/ccl")
-(require 'slime-autoloads)
-(setq slime-net-coding-system 'utf-8-unix)
-(slime-setup '(slime-fancy))
-
-(setq slime-lisp-implementations
-      '((ccl ( "~/scripts/ccl"))
-	(sbcl ("/opt/sbcl/bin/sbcl") :coding-system utf-8-unix)))
 
 
 
@@ -218,11 +73,7 @@
 ;(add-to-list 'semantic-lex-c-preprocessor-symbol-file (concat ncurses-base-dir))
 
 ;;magit
-
 (require 'magit)
-
-;;(require 'magit)
-
 
 ;;=====set standard indent size to 4===
 ;;=====set style to curly under word mode===
@@ -230,7 +81,7 @@
 (add-hook 'c++-mode-hook ' (lambda ()
     (setq c-basic-offset 8)))
 (add-hook 'c-mode-hook ' (lambda ()
-    (setq c-basic-offset 8)))
+    (setq c-basic-offset 4)))
 
 ; Use only spaces for indentation (default is tabs mixed with spaces)
 ; so that our files will always look the same regardless of the viewing
@@ -258,7 +109,7 @@
 ;;taken from http://www.cs.cmu.edu/~keng/emacs.config
 ;;========font lock==================
 (require 'font-lock)
-(setq nick-foreground "light green")
+(setq nick-foreground "light  green")
 (setq nick-background "dark cyan")
 
 
@@ -356,31 +207,11 @@
 ;; set emacs background color
 ;;(set-background-color "dark cyan");;008b8b
 
-
 ;; startup stuff 
 ;;(split-window-horizontally)   ;; want two windows at startup 
 ;;(other-window 1)              ;; move to other window
 ;;(shell)                       ;; start a shell
 ;;(rename-buffer "shell-first") ;; rename it
-
-
-
-
-;; startup stuff 
-(split-window-horizontally)   ;; want two windows at startup 
-(other-window 1)              ;; move to other window
-(shell)                       ;; start a shell
-(rename-buffer "shell-first") ;; rename it
-
-
-(defun sayhello (name word)
-  "Nonce function"
-  (interactive "sName: \nsWord: ")
-  (message "Hey what's up %s, how the  %s are you" name word))
-
-;(global-set-key (kdb "C-c h") 'doodlebug )
-;(lookup-key (current-global-map) (kdb "C-c a"))
-(define-key global-map "\C-ch" 'sayhello)
 
 ;;new shit for adding a skeleton for a new file
 ;(eval-after-load 'autoinsert
@@ -397,18 +228,3 @@
 ;       "{" \n
 ;       > _ \n
 ;       "}" > \n)))
-
-;; ---------------------------
-;; -- JS Mode configuration --
-;; ---------------------------
-;(load "js-config.el")
-;(add-to-list 'load-path "~/.emacs.d/jade-mode") ;; github.com/brianc/jade-mode
-;(require 'sws-mode)
-;(require 'jade-mode)
-;(add-to-list 'auto-mode-alist '("\\.styl$" . sws-mode))
-
-;(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
-=======
-;(add-to-list 'auto-mode-alist '("\\.jade$" . jade-mode))
-(put 'narrow-to-page 'disabled nil)
-
